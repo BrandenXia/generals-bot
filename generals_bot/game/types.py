@@ -1,5 +1,7 @@
 from typing import TypedDict, Literal, Any
 
+type GameType = Literal["ffa", "1v1", "custom"]
+
 
 class InitialData(TypedDict):
     playerIndex: int
@@ -8,7 +10,7 @@ class InitialData(TypedDict):
     chat_room: str
     usernames: list[str]
     teams: list[int]
-    game_type: Literal["ffa", "1v1", "custom"]
+    game_type: GameType
     swamps: list[Any]
     lights: list[Any]
     options: dict[str, Any]

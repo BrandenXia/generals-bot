@@ -1,6 +1,5 @@
 import asyncio
 import os
-from typing import cast, Literal
 
 from dotenv import load_dotenv
 
@@ -13,7 +12,7 @@ async def main():
     client = GeneralsClient(
         user_id=os.getenv("USER_ID"),
         username=os.getenv("USERNAME"),
-        server=cast(Literal["human", "bot"], os.getenv("SERVER")),
+        server="bot",
         debug=True
     )
     await client.connect()

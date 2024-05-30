@@ -1,5 +1,4 @@
 import logging
-from typing import Literal
 
 from socketio import AsyncClient
 
@@ -16,7 +15,7 @@ class GeneralsClient(BaseClient, GlobalListener, GameListener):
         self,
         user_id: str,
         username: str,
-        server: Literal["human", "bot"],
+        server,
         debug: bool = False,
     ):
         logger.setLevel(logging.DEBUG if debug else logging.INFO)

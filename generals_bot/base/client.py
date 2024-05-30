@@ -1,10 +1,10 @@
 import asyncio
-from typing import Literal
 
 from socketio import AsyncClient
 
 from generals_bot.constant import endpoints
 from generals_bot.logger import logger
+from generals_bot.constant.endpoints import ServerType
 
 
 class BaseClient:
@@ -14,7 +14,7 @@ class BaseClient:
         self,
         user_id: str,
         username: str,
-        server: Literal["human", "bot"],
+        server: ServerType,
     ):
         logger.info("BaseClient initialized")
         logger.debug(f"Username: {repr(username)} | Server: {repr(server)}")

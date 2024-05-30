@@ -6,6 +6,7 @@ class GameData:
     def __init__(self, initial_data: InitialData):
         logger.info(f'Game initialized"')
 
+        self.game_type = initial_data["game_type"]
         self.replay_id: str = initial_data["replay_id"]
         self.player_index: int = initial_data["playerIndex"]
 
