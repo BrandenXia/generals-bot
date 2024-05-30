@@ -1,0 +1,12 @@
+# editor
+/.idea
+
+# environment
+.env
+
+# python
+*.pyc
+*.pyo
+*.egg-info
+build
+__pycache__

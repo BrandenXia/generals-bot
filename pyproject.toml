@@ -1,0 +1,17 @@
+[project]
+name = "generals-bot"
+version = "0.0.1"
+authors = [
+    { name = "Branden Xia", email = "xxtbranden@outlook.com" }
+]
+dependencies = [
+    "requests",
+    "python-socketio[asyncio_client]",
+    "python-dotenv",
+    "rich"
+]
+optional-dependencies = { dev = ["black"] }
+
+[tool.black]
+line-length = 88
+target-version = ["py312"]
