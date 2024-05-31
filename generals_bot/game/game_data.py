@@ -1,5 +1,8 @@
+import logging
+
 from generals_bot.game.types import InitialData, UpdateData
-from generals_bot.logger import logger
+
+logger = logging.getLogger(__name__)
 
 
 class GameData:

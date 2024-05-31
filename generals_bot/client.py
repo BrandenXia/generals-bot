@@ -1,11 +1,11 @@
 import logging
 
+from rich.logging import RichHandler
 from socketio import AsyncClient
 
 from generals_bot.base import BaseClient
 from generals_bot.game import GameListener
 from generals_bot.global_listener import GlobalListener
-from generals_bot.logger import logger
 
 
 class GeneralsClient(BaseClient, GlobalListener, GameListener):
@@ -18,7 +18,12 @@ class GeneralsClient(BaseClient, GlobalListener, GameListener):
         server,
         debug: bool = False,
     ):
-        logger.setLevel(logging.DEBUG if debug else logging.INFO)
+        logging.basicConfig(
+            level=logging.DEBUG if debug else logging.INFO,
+            format="%(message)s",
+            datefmt="[%X]",
+            handlers=[RichHandler()],
+        )
 
         self._sio = AsyncClient()
 

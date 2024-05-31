@@ -1,10 +1,12 @@
 import asyncio
+import logging
 
 from socketio import AsyncClient
 
 from generals_bot.constant import endpoints
-from generals_bot.logger import logger
 from generals_bot.constant.endpoints import ServerType
+
+logger = logging.getLogger(__name__)
 
 
 class BaseClient:

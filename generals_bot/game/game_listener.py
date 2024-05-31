@@ -1,9 +1,12 @@
+import logging
+
 from socketio import AsyncClient
 
 from generals_bot.base import BaseListener
-from generals_bot.game.types import InitialData, UpdateData
-from generals_bot.logger import logger
 from generals_bot.game import GameData
+from generals_bot.game.types import InitialData, UpdateData
+
+logger = logging.getLogger(__name__)
 
 
 class GameListener(BaseListener):
