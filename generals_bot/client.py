@@ -30,3 +30,8 @@ class GeneralsClient(BaseClient, GlobalListener, GameListener):
         BaseClient.__init__(self, user_id, username, server)
         GlobalListener.__init__(self)
         GameListener.__init__(self)
+
+    async def run(self):
+        await self.connect()
+        await self.join_private("test", force_start=True)
+        await self.wait()

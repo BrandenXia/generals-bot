@@ -8,17 +8,20 @@ from generals_bot import GeneralsClient
 load_dotenv()
 
 
-async def main():
+def main():
     client = GeneralsClient(
         user_id=os.getenv("USER_ID"),
         username=os.getenv("USERNAME"),
         server="bot",
         debug=True,
     )
-    await client.connect()
-    await client.join_private("test", force_start=True),
-    await client.wait()
+
+    client_task = asyncio.ensure_future(client.run())
+    try:
+        asyncio.get_event_loop().run_forever()
+    finally:
+        client_task.cancel()
 
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    main()

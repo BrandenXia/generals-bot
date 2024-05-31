@@ -8,9 +8,14 @@ dependencies = [
     "requests",
     "python-socketio[asyncio_client]",
     "python-dotenv",
-    "rich"
+    "rich",
 ]
-optional-dependencies = { dev = ["black"] }
+
+[project.optional-dependencies]
+dev = ["black"]
+
+[project.scripts]
+generals-bot = "generals_bot.__main__:main"
 
 [tool.black]
 line-length = 88
