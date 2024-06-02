@@ -12,7 +12,6 @@ logger = logging.getLogger(__name__)
 
 
 class GameGUI:
-
     def __init__(self):
         self._data: GameData | None = None
 
@@ -132,11 +131,6 @@ class GameGUI:
             return
 
         text = self.font.render(str(army), True, (255, 255, 255))
-        text_rect = text.get_rect(
-            center=(
-                start_x + unit // 2,
-                start_y + unit // 2
-            )
-        )
+        text_rect = text.get_rect(center=(start_x + unit // 2, start_y + unit // 2))
 
         self.win.blit(text, text_rect)
