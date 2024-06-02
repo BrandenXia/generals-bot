@@ -13,6 +13,7 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = ["black"]
+gui = ["pygame"]
 
 [project.scripts]
 generals-bot = "generals_bot.__main__:main"
