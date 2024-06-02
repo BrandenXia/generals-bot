@@ -136,8 +136,8 @@ class GameGUI:
         text = self.font.render(str(army), True, (255, 255, 255))
         text_rect = text.get_rect(
             center=(
-                start_x + (unit - self.border) // 2,
-                start_y + (unit - self.border) // 2,
+                start_x + unit // 2,
+                start_y + unit // 2
             )
         )
 
