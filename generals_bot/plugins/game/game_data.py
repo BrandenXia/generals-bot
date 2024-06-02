@@ -22,6 +22,7 @@ class GameData:
         self.player_index: int = initial_data["playerIndex"]
         self.players: Sequence[Player] = _get_players(initial_data)
 
+        self._turn: int = 0
         self._generals: list[int] = []
         self._cities: list[int] = []
         self._map: list[int] = []
@@ -43,6 +44,10 @@ class GameData:
     @property
     def size(self) -> int:
         return self.width * self.height
+
+    @property
+    def turn(self) -> int:
+        return self._turn
 
     @property
     def generals(self) -> Sequence[int]:
@@ -74,11 +79,14 @@ class GameData:
         )
 
     def update_generals(self, generals: Sequence[int]):
-        self._generals = [
-            old if new == -1 else new for old, new in zip(self._generals, generals)
-        ]
+        self._generals = (
+            [old if new == -1 else new for old, new in zip(self._generals, generals)]
+            if self._generals
+            else generals
+        )
 
     def update(self, data: UpdateData):
+        self._turn = data["turn"]
         self.update_generals(data["generals"])
         self._map = _patch(self._map, data["map_diff"])
         self._cities = _patch(self._cities, data["cities_diff"])
