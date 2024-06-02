@@ -3,7 +3,7 @@ from enum import IntFlag, IntEnum, auto
 from functools import cached_property
 from typing import NamedTuple
 
-from generals_bot.game.dto import ScoreData
+from generals_bot.plugins.game.dto import ScoreData
 
 type Army = int
 

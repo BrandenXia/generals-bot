@@ -13,8 +13,6 @@ logger = logging.getLogger(__name__)
 
 class GameGUI:
     def __init__(self):
-        logger.info("GameGUI initialized")
-
         self._data: GameData | None = None
 
         pygame.init()
@@ -35,6 +33,8 @@ class GameGUI:
         self._init_screen()
 
         asyncio.ensure_future(self.pygame_event_loop())
+
+        logger.info("GameGUI initialized")
 
     def _init_screen(self):
         self.win.fill((34, 34, 34))

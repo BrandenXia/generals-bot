@@ -1,29 +1,26 @@
 import asyncio
 import logging
 
-from socketio import AsyncClient
-
-from generals_bot.base import BaseListener
-from generals_bot.game import GameData
-from generals_bot.game.gui import GameGUI
-from generals_bot.game.dto import InitialData, UpdateData
+from generals_bot.base import BasePlugin
+from generals_bot.plugins.game import GameData
+from generals_bot.plugins.game.dto import InitialData, UpdateData
+from generals_bot.plugins.game.gui import GameGUI
 
 logger = logging.getLogger(__name__)
 
 
-class GameListener(BaseListener):
-    _sio: AsyncClient
-
-    def __init__(self, with_gui: bool = True):
-        logger.info("GameListener initialized")
-
-        self._sio.on("game_start", self.on_game_start)
-        self._sio.on("game_update", self.on_game_update)
-        self._sio.on("game_over", self.on_game_over)
+class GameListener(BasePlugin):
+    def __init__(self, with_gui=False):
+        super().__init__()
 
         self.data: GameData | None = None
 
         self.gui: GameGUI | None = GameGUI() if with_gui else None
+
+    def _register_events(self):
+        self._sio.on("game_start", self.on_game_start)
+        self._sio.on("game_update", self.on_game_update)
+        self._sio.on("game_over", self.on_game_over)
 
     async def on_game_start(self, data: InitialData, _):
         logger.info("Game started")

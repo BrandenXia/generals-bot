@@ -4,21 +4,27 @@ import os
 from dotenv import load_dotenv
 
 from generals_bot import GeneralsClient
+from generals_bot.plugins import GlobalListener, GameListener
 
 load_dotenv()
 
 
 def main():
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
+
     client = GeneralsClient(
         user_id=os.getenv("USER_ID"),
         username=os.getenv("USERNAME"),
         server="bot",
+        plugins=[GlobalListener(), GameListener(with_gui=True)],
         debug=True,
     )
 
     client_task = asyncio.ensure_future(client.run())
+
     try:
-        asyncio.get_event_loop().run_forever()
+        loop.run_until_complete(client_task)
     finally:
         client_task.cancel()
 

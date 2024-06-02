@@ -2,8 +2,8 @@ import logging
 from collections.abc import Sequence
 from typing import Any, Generator
 
-from generals_bot.game.dto import InitialData, UpdateData
-from generals_bot.game.types import (
+from generals_bot.plugins.game.dto import InitialData, UpdateData
+from generals_bot.plugins.game.types import (
     Terrain,
     Player,
     MapBlock,
@@ -15,7 +15,6 @@ logger = logging.getLogger(__name__)
 
 class GameData:
     def __init__(self, initial_data: InitialData):
-        logger.info(f'Game initialized"')
         logger.debug(f"InitialData: {repr(initial_data)}")
 
         self.game_type = initial_data["game_type"]
@@ -28,6 +27,8 @@ class GameData:
         self._map: list[int] = []
 
         logger.debug(f"GameData: {repr(self)}")
+
+        logger.info(f'Game initialized"')
 
     @property
     def width(self) -> int:

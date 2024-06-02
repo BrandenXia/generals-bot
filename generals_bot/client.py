@@ -1,21 +1,17 @@
 import logging
 
 from rich.logging import RichHandler
-from socketio import AsyncClient
 
-from generals_bot.base import BaseClient
-from generals_bot.game import GameListener
-from generals_bot.global_listener import GlobalListener
+from generals_bot.base import BaseClient, BasePlugin
 
 
-class GeneralsClient(BaseClient, GlobalListener, GameListener):
-    _sio = None
-
+class GeneralsClient(BaseClient):
     def __init__(
         self,
         user_id: str,
         username: str,
         server,
+        plugins: list[BasePlugin] | None = None,
         debug: bool = False,
     ):
         logging.basicConfig(
@@ -25,11 +21,15 @@ class GeneralsClient(BaseClient, GlobalListener, GameListener):
             handlers=[RichHandler()],
         )
 
-        self._sio = AsyncClient()
+        super().__init__(user_id, username, server)
 
-        BaseClient.__init__(self, user_id, username, server)
-        GlobalListener.__init__(self)
-        GameListener.__init__(self)
+        self.plugins = plugins or []
+
+        [self.register_plugin(plugin) for plugin in self.plugins]
+
+    def register_plugin(self, plugin: BasePlugin):
+        assert isinstance(plugin, BasePlugin)
+        plugin.set_sio(self._sio)
 
     async def run(self):
         await self.connect()

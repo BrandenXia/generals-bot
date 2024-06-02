@@ -10,20 +10,22 @@ logger = logging.getLogger(__name__)
 
 
 class BaseClient:
-    _sio: AsyncClient
-
     def __init__(
         self,
         user_id: str,
         username: str,
         server: ServerType,
+        sio: AsyncClient | None = None,
     ):
-        logger.info("BaseClient initialized")
         logger.debug(f"Username: {repr(username)} | Server: {repr(server)}")
+
+        self._sio = sio or AsyncClient()
 
         self.user_id = user_id
         self.username = username
         self.url = endpoints.URLS[server]
+
+        logger.info(f"{self.__class__.__name__} initialized")
 
     async def set_username(self):
         await self._sio.emit("set_username", (self.user_id, self.username))

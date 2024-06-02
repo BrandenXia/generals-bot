@@ -1,17 +1,12 @@
 import logging
 
-from socketio import AsyncClient
-
-from generals_bot.base import BaseListener
+from generals_bot.base import BasePlugin
 
 logger = logging.getLogger(__name__)
 
 
-class GlobalListener(BaseListener):
-    _sio: AsyncClient
-
-    def __init__(self) -> None:
-        logger.info("GlobalListener initialized")
+class GlobalListener(BasePlugin):
+    def _register_events(self):
         self._sio.on("connect", self.on_connect)
         self._sio.on("connect_error", self.on_connect_error)
         self._sio.on("disconnect", self.on_disconnect)
