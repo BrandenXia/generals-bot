@@ -2,10 +2,11 @@ import asyncio
 import logging
 from pathlib import Path
 
-import pygame
+from generals_bot.plugins.game import GameData
+from generals_bot.plugins.game.gui.silent_pygame import silent_pygame
+from generals_bot.plugins.game.types import Terrain
 
-from generals_bot.game import GameData
-from generals_bot.game.types import Terrain
+pygame = silent_pygame()
 
 logger = logging.getLogger(__name__)
 
