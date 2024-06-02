@@ -9,6 +9,8 @@ type Army = int
 
 
 class MapBlock(NamedTuple):
+    x: int
+    y: int
     army: Army
     terrain: Terrain
     is_city: bool

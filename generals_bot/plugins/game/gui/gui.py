@@ -77,15 +77,13 @@ class GameGUI:
         width = self.win.get_width()
         height = self.win.get_height()
 
-        unit = min(width // self._data.width, height // self._data.height)
+        unit = min(width // self._data.map.width, height // self._data.map.height)
         block_unit = unit - self.border
 
-        dx = (width - self._data.width * unit) // 2
-        dy = (height - self._data.height * unit) // 2
+        dx = (width - self._data.map.width * unit) // 2
+        dy = (height - self._data.map.height * unit) // 2
 
-        for i, (army, terrain, is_city, is_general) in enumerate(self._data.map):
-            y, x = divmod(i, self._data.width)
-
+        for x, y, army, terrain, is_city, is_general in self._data.map:
             start_x = x * unit + dx
             start_y = y * unit + dy
 
