@@ -18,6 +18,7 @@ class MultiHandlerAsyncClient(AsyncClient):
                 self.handlers[namespace] = {}
 
             if prev := self.handlers[namespace].get(event):
+
                 async def handler_wrapper(*args):
                     await prev(*args)
                     await new_handler(*args)
@@ -26,7 +27,9 @@ class MultiHandlerAsyncClient(AsyncClient):
             else:
                 self.handlers[namespace][event] = new_handler
 
-            logger.debug(f"Added handler for event '{event}' in namespace '{namespace}'")
+            logger.debug(
+                f"Added handler for event '{event}' in namespace '{namespace}'"
+            )
 
             return new_handler
 

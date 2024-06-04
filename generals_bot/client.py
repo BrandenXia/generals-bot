@@ -25,7 +25,9 @@ class GeneralsClient(BaseClient):
 
         super().__init__(user_id, username, server)
 
-        self._namespaces: Mapping[str, Namespace] = defaultdict(lambda : Namespace(self._sio))
+        self._namespaces: Mapping[str, Namespace] = defaultdict(
+            lambda: Namespace(self._sio)
+        )
         for plugin in plugins or []:
             self._namespaces[plugin.namespace].add_plugin(plugin)
 
