@@ -61,16 +61,16 @@ class GameGUI:
         pygame.quit()
         logger.info("Stopped pygame event loop")
 
-    def render_turn(self):
+    def update(self):
+        self._render_turn()
+        self._render_map()
+
+    def _render_turn(self):
         self.win.fill((34, 34, 34), (0, 30, 200, 40))
         text = self.font.render(f"Turn: {self._data.turn}", True, (255, 255, 255))
         self.win.blit(text, (10, 40))
 
-    def update(self):
-        self.render_turn()
-        self.render_map()
-
-    def render_map(self):
+    def _render_map(self):
         logger.info("Updating GUI")
 
         width = self.win.get_width()
@@ -86,19 +86,19 @@ class GameGUI:
             start_x = x * unit + dx
             start_y = y * unit + dy
 
-            self.render_terrain(start_x, start_y, block_unit, terrain)
+            self._render_terrain(start_x, start_y, block_unit, terrain)
 
             if is_general:
-                self.render_general(start_x, start_y, block_unit)
+                self._render_general(start_x, start_y, block_unit)
 
             if is_city:
-                self.render_city(start_x, start_y, block_unit)
+                self._render_city(start_x, start_y, block_unit)
 
-            self.render_army(start_x, start_y, block_unit, army)
+            self._render_army(start_x, start_y, block_unit, army)
 
         pygame.display.flip()
 
-    def render_terrain(self, start_x: int, start_y: int, unit: int, terrain: Terrain):
+    def _render_terrain(self, start_x: int, start_y: int, unit: int, terrain: Terrain):
         pygame.draw.rect(self.win, terrain.color, (start_x, start_y, unit, unit))
 
         img: pygame.Surface
@@ -112,13 +112,13 @@ class GameGUI:
                 return
         self.win.blit(img, (start_x + self.border // 2, start_y + self.border // 2))
 
-    def render_general(self, start_x: int, start_y: int, unit: int):
+    def _render_general(self, start_x: int, start_y: int, unit: int):
         self.win.blit(
             pygame.transform.scale(self.crown, (unit, unit)),
             (start_x + self.border // 2, start_y + self.border // 2),
         )
 
-    def render_city(self, start_x: int, start_y: int, unit: int):
+    def _render_city(self, start_x: int, start_y: int, unit: int):
         pygame.draw.rect(self.win, (128, 128, 128), (start_x, start_y, unit, unit))
 
         self.win.blit(
@@ -126,7 +126,7 @@ class GameGUI:
             (start_x + self.border // 2, start_y + self.border // 2),
         )
 
-    def render_army(self, start_x: int, start_y: int, unit: int, army: int):
+    def _render_army(self, start_x: int, start_y: int, unit: int, army: int):
         if army == 0:
             return
 

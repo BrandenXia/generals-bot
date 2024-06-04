@@ -1,3 +1,4 @@
+from collections.abc import Mapping
 from types import MappingProxyType
 from typing import Literal
 
@@ -7,7 +8,7 @@ type ServerType = Literal["human", "bot"]
 
 type ProtocolType = Literal["ws", "https"]
 
-URLS: dict[ServerType, dict[ProtocolType, URL]] = MappingProxyType(
+URLS: Mapping[ServerType, Mapping[ProtocolType, URL]] = MappingProxyType(
     {
         "human": {
             "ws": URL(netloc="ws.generals.io"),
