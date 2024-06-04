@@ -3,8 +3,8 @@ import logging
 from pathlib import Path
 
 from generals_bot.constant.gui import Terrain
-from generals_bot.plugins.game import GameData
-from generals_bot.plugins.game.gui.silent_pygame import silent_pygame
+from generals_bot.plugins.data import GameData
+from .silent_pygame import silent_pygame
 
 pygame = silent_pygame()
 

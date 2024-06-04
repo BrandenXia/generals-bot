@@ -3,7 +3,7 @@ from functools import cached_property
 from typing import NamedTuple
 
 from generals_bot.constant.gui import PlayerColor, Terrain
-from generals_bot.plugins.game.dto import ScoreData
+from generals_bot.plugins.data.dto import ScoreData
 
 type Army = int
 

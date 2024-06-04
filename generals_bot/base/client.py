@@ -5,6 +5,7 @@ from socketio import AsyncClient
 
 from generals_bot.constant import endpoints
 from generals_bot.constant.endpoints import ServerType
+from generals_bot.socketio import MultiHandlerAsyncClient
 
 logger = logging.getLogger(__name__)
 
@@ -19,7 +20,7 @@ class BaseClient:
     ):
         logger.debug(f"Username: {repr(username)} | Server: {repr(server)}")
 
-        self._sio = sio or AsyncClient()
+        self._sio = sio or MultiHandlerAsyncClient()
 
         self.user_id = user_id
         self.username = username

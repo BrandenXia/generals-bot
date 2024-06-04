@@ -1,8 +1,10 @@
 import logging
+from collections import defaultdict
+from collections.abc import Mapping
 
 from rich.logging import RichHandler
 
-from generals_bot.base import BaseClient, BasePlugin
+from generals_bot.base import BaseClient, BasePlugin, Namespace
 
 
 class GeneralsClient(BaseClient):
@@ -23,13 +25,12 @@ class GeneralsClient(BaseClient):
 
         super().__init__(user_id, username, server)
 
-        self.plugins = plugins or []
+        self._namespaces: Mapping[str, Namespace] = defaultdict(lambda : Namespace(self._sio))
+        for plugin in plugins or []:
+            self._namespaces[plugin.namespace].add_plugin(plugin)
 
-        [self.register_plugin(plugin) for plugin in self.plugins]
-
-    def register_plugin(self, plugin: BasePlugin):
-        assert isinstance(plugin, BasePlugin)
-        plugin.set_sio(self._sio)
+        for namespace in self._namespaces.values():
+            namespace.register_plugins()
 
     async def run(self):
         await self.connect()

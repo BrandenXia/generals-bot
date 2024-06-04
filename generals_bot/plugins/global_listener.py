@@ -6,6 +6,8 @@ logger = logging.getLogger(__name__)
 
 
 class GlobalListener(BasePlugin):
+    namespace = "global"
+
     def _register_events(self):
         self._sio.on("connect", self.on_connect)
         self._sio.on("connect_error", self.on_connect_error)

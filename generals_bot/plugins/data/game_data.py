@@ -1,8 +1,8 @@
 import logging
 from collections.abc import Sequence
 
-from generals_bot.plugins.game.dto import InitialData, UpdateData
-from generals_bot.plugins.game.types import (
+from generals_bot.plugins.data.dto import InitialData, UpdateData
+from generals_bot.plugins.data.types import (
     Terrain,
     Player,
     MapBlock,
