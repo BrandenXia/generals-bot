@@ -82,7 +82,9 @@ class GameGUI:
         dx = (width - self._data.map.width * unit) // 2
         dy = (height - self._data.map.height * unit) // 2
 
-        for x, y, army, terrain, is_city, is_general in self._data.map:
+        for x, y, army, terrain, is_city, is_general in self._data.map[
+            :, :, ("x", "y", "army", "terrain", "is_city", "is_general")
+        ]:
             start_x = x * unit + dx
             start_y = y * unit + dy
 

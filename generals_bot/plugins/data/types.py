@@ -3,12 +3,13 @@ from functools import cached_property
 from typing import NamedTuple
 
 from generals_bot.constant.gui import PlayerColor, Terrain
-from generals_bot.plugins.data.dto import ScoreData
+from .dto import ScoreData
 
 type Army = int
 
 
 class MapBlock(NamedTuple):
+    index: int
     x: int
     y: int
     army: Army

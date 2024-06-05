@@ -1,8 +1,10 @@
 import logging
 from collections.abc import Sequence
+from operator import attrgetter
+from typing import Literal
 
-from generals_bot.plugins.data.dto import InitialData, UpdateData
-from generals_bot.plugins.data.types import (
+from .dto import InitialData, UpdateData
+from .types import (
     Terrain,
     Player,
     MapBlock,
@@ -85,6 +87,7 @@ class Map:
     def __iter__(self):
         return (
             MapBlock(
+                i,
                 *divmod(i, self.width)[::-1],
                 army=self.armies[i],
                 terrain=self.terrain[i],
@@ -94,15 +97,25 @@ class Map:
             for i in range(self.size)
         )
 
-    def __getitem__(self, item: tuple[int | slice, int | slice]) -> list[MapBlock]:
-        x = item[0] if isinstance(item[0], slice) else slice(item[0], item[0] + 1)
-        y = item[1] if isinstance(item[1], slice) else slice(item[1], item[1] + 1)
+    def __getitem__(
+        self, item: tuple[int | slice, int | slice, tuple[str, ...]]
+    ) -> Sequence[MapBlock]:
+        fields = item[2] if len(item) > 2 else MapBlock._fields
 
-        if x.stop or y.stop:
+        x = item[0] if isinstance(item[0], slice) else slice(item[0], item[0] + 1)
+        y = item[1] if len(item) > 1 else slice(0, self.height)
+        y = y if isinstance(y, slice) else slice(y, y + 1)
+
+        if x == slice(None):
+            x = slice(0, self.width)
+        if y == slice(None):
+            y = slice(0, self.height)
+
+        if x.step or y.step:
             raise ValueError("Only single index access is supported")
 
         return [
-            block
+            attrgetter(*fields)(block)
             for block in self
             if x.start <= block.x < x.stop and y.start <= block.y < y.stop
         ]
