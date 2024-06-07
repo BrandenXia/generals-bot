@@ -5,7 +5,6 @@ authors = [
     { name = "Branden Xia", email = "xxtbranden@outlook.com" }
 ]
 dependencies = [
-    "requests",
     "python-socketio[asyncio_client]",
     "python-dotenv",
     "rich",
