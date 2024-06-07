@@ -3,6 +3,7 @@ from urllib.parse import urlunparse, urlencode
 
 
 class URL:
+    """URL builder class"""
     def __init__(
         self,
         scheme: str = "https",

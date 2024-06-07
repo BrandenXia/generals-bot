@@ -8,6 +8,8 @@ from generals_bot.base import BaseClient, BasePlugin, Namespace
 
 
 class GeneralsClient(BaseClient):
+    """Client for the Generals.io game, with support for plugins"""
+
     def __init__(
         self,
         user_id: str,

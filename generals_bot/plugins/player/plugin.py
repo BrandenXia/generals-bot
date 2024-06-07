@@ -6,6 +6,8 @@ from generals_bot.utils import timeit
 
 
 class PlayerPlugin(BasePlugin):
+    """Player plugin for controlling the bot"""
+
     namespace = "game"
 
     def _register_events(self):

@@ -13,7 +13,12 @@ logger = logging.getLogger(__name__)
 
 
 class GameGUI:
-    def __init__(self):
+    """
+    A GUI for the Generals.io bot, a simple pygame GUI that displays the game map and some basic information,
+    not interactive and is only used for debugging purposes
+    """
+
+    def __init__(self) -> None:
         self._data: GameData | None = None
 
         pygame.init()
@@ -37,26 +42,31 @@ class GameGUI:
 
         logger.info("GameGUI initialized")
 
-    def _init_screen(self):
+    def _init_screen(self) -> None:
+        """Fill the screen with a dark grey color and display the title of the game"""
         self.win.fill((34, 34, 34))
         self.win.blit(
             self.font.render("Generals.io Bot", True, (255, 255, 255)), (10, 10)
         )
         pygame.display.flip()
 
-    def game_over(self):
+    def game_over(self) -> None:
+        """Display a game over message"""
         self.win.blit(self.font.render("Game Over", True, (255, 255, 255)), (10, 70))
         pygame.display.flip()
 
-    def reset(self):
+    def reset(self) -> None:
+        """Reset the screen, used when a new game starts"""
         self._init_screen()
         self._data = None
 
-    def set_data(self, data: GameData):
+    def set_data(self, data: GameData) -> None:
+        """Set reference to the game data, be called at the start of each game"""
         self._data = data
 
     @staticmethod
-    async def pygame_event_loop():
+    async def pygame_event_loop() -> None:
+        """Start the pygame event loop, this is a coroutine that runs indefinitely until the window is closed"""
         logger.info("Starting pygame event loop")
         while True:
             await asyncio.sleep(0)
@@ -66,16 +76,19 @@ class GameGUI:
         pygame.quit()
         logger.info("Stopped pygame event loop")
 
-    def update(self):
+    def update(self) -> None:
+        """Update the GUI with the current game state"""
         self._render_turn()
         self._render_map()
 
-    def _render_turn(self):
+    def _render_turn(self) -> None:
+        """Display the current turn number"""
         self.win.fill((34, 34, 34), (0, 30, 200, 40))
         text = self.font.render(f"Turn: {self._data.turn}", True, (255, 255, 255))
         self.win.blit(text, (10, 40))
 
-    def _render_map(self):
+    def _render_map(self) -> None:
+        """Render the game map"""
         logger.info("Updating GUI")
 
         width = self.win.get_width()
@@ -105,7 +118,10 @@ class GameGUI:
 
         pygame.display.flip()
 
-    def _render_terrain(self, start_x: int, start_y: int, unit: int, terrain: Terrain):
+    def _render_terrain(
+        self, start_x: int, start_y: int, unit: int, terrain: Terrain
+    ) -> None:
+        """Render a block of terrain on the screen"""
         color = (
             PLAYER_COLOR_RGB[terrain]
             if terrain.is_player
@@ -125,13 +141,15 @@ class GameGUI:
                 return
         self.win.blit(img, (start_x + self.border // 2, start_y + self.border // 2))
 
-    def _render_general(self, start_x: int, start_y: int, unit: int):
+    def _render_general(self, start_x: int, start_y: int, unit: int) -> None:
+        """Render a crown on the screen to indicate the general's location"""
         self.win.blit(
             pygame.transform.scale(self.crown, (unit, unit)),
             (start_x + self.border // 2, start_y + self.border // 2),
         )
 
-    def _render_city(self, start_x: int, start_y: int, unit: int):
+    def _render_city(self, start_x: int, start_y: int, unit: int) -> None:
+        """Render a city on the screen to indicate the city's location"""
         pygame.draw.rect(self.win, (128, 128, 128), (start_x, start_y, unit, unit))
 
         self.win.blit(
@@ -139,7 +157,8 @@ class GameGUI:
             (start_x + self.border // 2, start_y + self.border // 2),
         )
 
-    def _render_army(self, start_x: int, start_y: int, unit: int, army: int):
+    def _render_army(self, start_x: int, start_y: int, unit: int, army: int) -> None:
+        """Render the army count on the screen"""
         if army == 0:
             return
 

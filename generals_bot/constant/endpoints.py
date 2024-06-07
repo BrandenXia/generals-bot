@@ -8,6 +8,7 @@ type ServerType = Literal["human", "bot"]
 
 type ProtocolType = Literal["ws", "https"]
 
+# Mapping of server type to protocol type to general.io URL
 URLS: Mapping[ServerType, Mapping[ProtocolType, URL]] = MappingProxyType(
     {
         "human": {

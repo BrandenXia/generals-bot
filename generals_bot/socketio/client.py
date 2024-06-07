@@ -6,6 +6,8 @@ logger = logging.getLogger(__name__)
 
 
 class MultiHandlerAsyncClient(AsyncClient):
+    """AsyncClient subclass that allows multiple handlers for the same event"""
+
     def on(self, event, handler=None, namespace=None):
         """
         Override the on method to allow multiple handlers for the same event,
