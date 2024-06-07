@@ -4,7 +4,7 @@ import os
 from dotenv import load_dotenv
 
 from generals_bot import GeneralsClient
-from generals_bot.plugins import GlobalListener, DataListener, GUIPlugin
+from generals_bot.plugins import GlobalListener, DataListener, GUIPlugin, PlayerPlugin
 
 load_dotenv()
 
@@ -17,7 +17,7 @@ def main():
         user_id=os.getenv("USER_ID"),
         username=os.getenv("USERNAME"),
         server="bot",
-        plugins=[GlobalListener(), DataListener(), GUIPlugin()],
+        plugins=[GlobalListener(), DataListener(), GUIPlugin(), PlayerPlugin()],
         debug=True,
     )
 
