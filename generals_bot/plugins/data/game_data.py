@@ -100,6 +100,7 @@ class Map:
     def __getitem__(
         self, item: tuple[int | slice, int | slice, tuple[str, ...]]
     ) -> Sequence[MapBlock]:
+        # TODO: rewrite this method, it's working but it's ugly
         fields = item[2] if len(item) > 2 else MapBlock._fields
 
         x = item[0] if isinstance(item[0], slice) else slice(item[0], item[0] + 1)
@@ -121,6 +122,7 @@ class Map:
         ]
 
     def get_around(self, x: int, y: int, radius: int) -> Sequence[MapBlock]:
+        # TODO: rewrite this method, it's working but it's too slow
         return [
             block for block in self if abs(block.x - x) + abs(block.y - y) <= radius
         ]
