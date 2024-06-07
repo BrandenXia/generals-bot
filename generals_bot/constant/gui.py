@@ -1,5 +1,3 @@
-from enum import IntFlag
-
 from generals_bot.plugins.data.types import PlayerColor, Terrain
 
 BG_COLOR = (34, 34, 34)

@@ -2,6 +2,7 @@ import logging
 from collections.abc import Sequence
 from functools import cached_property
 from operator import attrgetter
+from typing import Any, Generator
 
 from .dto import InitialData, UpdateData
 from .types import (
@@ -15,7 +16,13 @@ logger = logging.getLogger(__name__)
 
 
 class GameData:
-    def __init__(self, initial_data: InitialData):
+    """Class to store game data"""
+
+    def __init__(self, initial_data: InitialData) -> None:
+        """
+        Initialize the game data
+        :param initial_data: Initial data received from the server
+        """
         logger.debug(f"InitialData: {repr(initial_data)}")
 
         self.game_type = initial_data["game_type"]
@@ -32,19 +39,23 @@ class GameData:
 
     @property
     def turn(self) -> int:
+        """Game turn number"""
         return self._turn
 
-    def update(self, data: UpdateData):
+    def update(self, data: UpdateData) -> None:
+        """:param data: Data received from the server"""
         self._turn = data["turn"]
         self.map.update(data)
 
         logger.debug(f"GameData: {repr(self)}")
 
-    def __repr__(self):
+    def __repr__(self) -> str:
+        """Return a string representation of the game data for debugging"""
         return f"GameData(turn={self.turn}, players={self.players}, map={self.map})"
 
 
 def _get_players(initial_data: InitialData) -> Sequence[Player]:
+    """Return a list of players from the initial data"""
     return [
         Player(*player_data)
         for player_data in zip(
@@ -56,7 +67,9 @@ def _get_players(initial_data: InitialData) -> Sequence[Player]:
 
 
 class Map:
-    def __init__(self):
+    """Class to store the game map"""
+
+    def __init__(self) -> None:
         self._generals: list[int] = []
         self._cities: list[int] = []
         self._map: list[int] = []
@@ -84,7 +97,7 @@ class Map:
     def size(self) -> int:
         return self.width * self.height
 
-    def __iter__(self):
+    def __iter__(self) -> Generator[MapBlock, Any, None]:
         return (
             MapBlock(
                 i,
@@ -127,20 +140,20 @@ class Map:
             block for block in self if abs(block.x - x) + abs(block.y - y) <= radius
         ]
 
-    def update(self, data: UpdateData):
+    def update(self, data: UpdateData) -> None:
         self._update_generals(data["generals"])
         self._map = self._patch(self._map, data["map_diff"])
         self._cities = self._patch(self._cities, data["cities_diff"])
         self._clear_cache()
 
-    def _update_generals(self, generals: Sequence[int]):
+    def _update_generals(self, generals: Sequence[int]) -> None:
         self._generals = (
             [old if new == -1 else new for old, new in zip(self._generals, generals)]
             if self._generals
             else generals
         )
 
-    def _clear_cache(self):
+    def _clear_cache(self) -> None:
         for name in dir(type(self)):
             if isinstance(getattr(type(self), name), cached_property):
                 vars(self).pop(name, None)
@@ -161,5 +174,5 @@ class Map:
 
         return new
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"Map(width={self.width}, height={self.height}, generals={self._generals}, cities={self._cities})"
