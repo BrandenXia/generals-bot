@@ -2,9 +2,10 @@ import asyncio
 import logging
 from pathlib import Path
 
-from generals_bot.constant.gui import Terrain
 from generals_bot.plugins.data import GameData
 from .silent_pygame import silent_pygame
+from ..data.types import Terrain
+from generals_bot.constant.gui import PLAYER_COLOR_RGB, TERRAIN_COLOR_RGB
 
 pygame = silent_pygame()
 
@@ -101,7 +102,13 @@ class GameGUI:
         pygame.display.flip()
 
     def _render_terrain(self, start_x: int, start_y: int, unit: int, terrain: Terrain):
-        pygame.draw.rect(self.win, terrain.color, (start_x, start_y, unit, unit))
+        color = (
+            PLAYER_COLOR_RGB[terrain]
+            if terrain.is_player
+            else TERRAIN_COLOR_RGB[terrain]
+        )
+
+        pygame.draw.rect(self.win, color, (start_x, start_y, unit, unit))
 
         img: pygame.Surface
 
