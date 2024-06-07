@@ -44,6 +44,10 @@ class GameGUI:
         )
         pygame.display.flip()
 
+    def game_over(self):
+        self.win.blit(self.font.render("Game Over", True, (255, 255, 255)), (10, 70))
+        pygame.display.flip()
+
     def reset(self):
         self._init_screen()
         self._data = None

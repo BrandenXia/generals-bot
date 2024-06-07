@@ -1,5 +1,3 @@
-import asyncio
-
 from generals_bot.base import BasePlugin
 from .gui import GameGUI
 
@@ -17,11 +15,11 @@ class GUIPlugin(BasePlugin):
         self._sio.on("game_over", self.on_game_over)
 
     async def on_game_start(self, _, __):
+        self.gui.reset()
         self.gui.set_data(self._namespace_data["data"])
 
     async def on_game_update(self, _, __):
         self.gui.update()
 
     async def on_game_over(self, _, __):
-        await asyncio.sleep(5)
-        self.gui.reset()
+        self.gui.game_over()
