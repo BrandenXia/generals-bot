@@ -1,7 +1,7 @@
 import logging
 from collections.abc import Sequence
+from functools import cached_property
 from operator import attrgetter
-from typing import Literal
 
 from .dto import InitialData, UpdateData
 from .types import (
@@ -61,26 +61,26 @@ class Map:
         self._cities: list[int] = []
         self._map: list[int] = []
 
-    @property
+    @cached_property
     def armies(self) -> Sequence[Army]:
         return self._map[2 : 2 + self.size] if self._map else []
 
-    @property
+    @cached_property
     def terrain(self) -> Sequence[Terrain]:
         terrain = self._map[2 + self.size : 2 + 2 * self.size] if self._map else []
         return [Terrain(t) for t in terrain]
 
-    @property
+    @cached_property
     def width(self) -> int:
         """Return the number of columns in the map"""
         return self._map[0] if self._map else 0
 
-    @property
+    @cached_property
     def height(self) -> int:
         """Return the number of rows in the map"""
         return self._map[1] if self._map else 0
 
-    @property
+    @cached_property
     def size(self) -> int:
         return self.width * self.height
 
@@ -120,10 +120,16 @@ class Map:
             if x.start <= block.x < x.stop and y.start <= block.y < y.stop
         ]
 
+    def get_around(self, x: int, y: int, radius: int) -> Sequence[MapBlock]:
+        return [
+            block for block in self if abs(block.x - x) + abs(block.y - y) <= radius
+        ]
+
     def update(self, data: UpdateData):
         self._update_generals(data["generals"])
         self._map = self._patch(self._map, data["map_diff"])
         self._cities = self._patch(self._cities, data["cities_diff"])
+        self._clear_cache()
 
     def _update_generals(self, generals: Sequence[int]):
         self._generals = (
@@ -131,6 +137,11 @@ class Map:
             if self._generals
             else generals
         )
+
+    def _clear_cache(self):
+        for name in dir(type(self)):
+            if isinstance(getattr(type(self), name), cached_property):
+                vars(self).pop(name, None)
 
     @staticmethod
     def _patch(old: Sequence[int], diff: Sequence[int]) -> Sequence[int]:
