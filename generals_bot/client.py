@@ -38,5 +38,5 @@ class GeneralsClient(BaseClient):
 
     async def run(self):
         await self.connect()
-        await self.join_private("test", force_start=True)
+        # await self.join_private("test", force_start=True)
         await self.wait()

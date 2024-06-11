@@ -10,3 +10,9 @@
 *.egg-info
 build
 __pycache__
+
+# file system
+.DS_Store
+
+# game data
+/records
