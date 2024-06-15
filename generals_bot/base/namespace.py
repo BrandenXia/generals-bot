@@ -17,7 +17,7 @@ class Namespace:
         :param plugins: list of plugins to register, can be added later
         """
         self._sio = sio
-        self._plugins = plugins or []
+        self._plugins: list[BasePlugin] = plugins or []
         self._data: dict[str, Any] = defaultdict()
 
     def add_plugin(self, plugin: BasePlugin) -> None:
@@ -38,4 +38,5 @@ class Namespace:
 
     def register_plugins(self) -> None:
         """Register all plugins in the namespace"""
-        [self._register_plugin(plugin) for plugin in self._plugins]
+        for plugin in self._plugins:
+            self._register_plugin(plugin)

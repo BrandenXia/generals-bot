@@ -1,4 +1,4 @@
-from typing import Mapping
+from typing import Mapping, Self
 from urllib.parse import urlunparse, urlencode
 
 
@@ -21,23 +21,23 @@ class URL:
         self._query: Mapping[str, str] = query or {}
         self._fragment = fragment
 
-    def scheme(self, scheme: str) -> "URL":
+    def scheme(self, scheme: str) -> Self:
         self._scheme = scheme
         return self
 
-    def netloc(self, netloc: str) -> "URL":
+    def netloc(self, netloc: str) -> Self:
         self._netloc = netloc
         return self
 
-    def url(self, url: str) -> "URL":
+    def url(self, url: str) -> Self:
         self._url = url
         return self
 
-    def query(self, query: Mapping[str, str]) -> "URL":
+    def query(self, query: Mapping[str, str]) -> Self:
         self._query = query
         return self
 
-    def fragment(self, fragment: str) -> "URL":
+    def fragment(self, fragment: str) -> Self:
         self._fragment = fragment
         return self
 

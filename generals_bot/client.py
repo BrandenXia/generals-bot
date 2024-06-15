@@ -1,7 +1,7 @@
 import logging
 from collections import defaultdict
 from collections.abc import Mapping
-from typing import Any
+from typing import Any, Self
 
 from rich.logging import RichHandler
 
@@ -39,7 +39,7 @@ class GeneralsClient(Generals, Playback):
         for namespace in self._namespaces.values():
             namespace.register_plugins()
 
-    async def __aenter__(self) -> "GeneralsClient":
+    async def __aenter__(self) -> Self:
         await self.connect()
         return self
 

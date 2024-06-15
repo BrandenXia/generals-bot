@@ -10,14 +10,14 @@ class MultiHandlerAsyncClient(AsyncClient):
     """AsyncClient subclass that allows multiple handlers for the same event"""
 
     def on[
-        T
+        **P
     ](
         self,
         event: str,
-        handler: Callable[T, Awaitable[None]] | None = None,
+        handler: Callable[P, Awaitable[None]] | None = None,
         namespace: str | None = None,
     ) -> (
-        Callable[[Callable[T, Awaitable[None]]], Callable[T, Awaitable[None]]] | None
+        Callable[[Callable[P, Awaitable[None]]], Callable[P, Awaitable[None]]] | None
     ):
         """
         Override the on method to allow multiple handlers for the same event,
@@ -26,17 +26,16 @@ class MultiHandlerAsyncClient(AsyncClient):
         namespace = namespace or "/"
 
         def add_handler(
-            new_handler: Callable[T, Awaitable[None]]
-        ) -> Callable[T, Awaitable[None]]:
+            new_handler: Callable[P, Awaitable[None]]
+        ) -> Callable[P, Awaitable[None]]:
             if namespace not in self.handlers:
                 self.handlers[namespace] = {}
 
             if prev := self.handlers[namespace].get(event):
-                prev: Callable[T, Awaitable[None]]
 
-                async def handler_wrapper(*args: T) -> None:
-                    await prev(*args)
-                    await new_handler(*args)
+                async def handler_wrapper(*args: P.args, **kwargs: P.kwargs) -> None:
+                    await prev(*args, **kwargs)
+                    await new_handler(*args, **kwargs)
 
                 self.handlers[namespace][event] = handler_wrapper
             else:
