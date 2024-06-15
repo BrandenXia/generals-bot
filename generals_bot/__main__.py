@@ -32,7 +32,7 @@ async def _main():
         ],
         debug=True,
     ) as client:
-        client.join_private("test", force_start=True)
+        await client.join_private("test", force_start=True)
 
 
 def main():
