@@ -39,11 +39,11 @@ class BaseClient:
     async def set_username(self) -> None:
         """Set username for the client, should only be called once forever for each user ID"""
         await self._sio.emit("set_username", (self.user_id, self.username))
-        logger.info(f'Set username to "{self.username}" with user ID "{self.user_id}"')
+        logger.info(f'Set username to {repr(self.username)} with user ID {repr(self.user_id)}')
 
     async def connect(self, set_username: bool = False) -> None:
         """Connect to the server"""
-        logger.info(f'Connecting to server "{self.url["ws"].build()}"')
+        logger.info(f'Connecting to server {repr(self.url["ws"].build())}')
         await self._sio.connect(self.url["ws"].build())
 
         if set_username:
@@ -81,7 +81,7 @@ class BaseClient:
     async def set_force_start(self, custom_game_id: str) -> None:
         """Force start a game"""
         await self._sio.emit("set_force_start", (custom_game_id, self.user_id))
-        logger.info(f'Force started private game with ID "{custom_game_id}"')
+        logger.info(f'Force started private game with ID {repr(custom_game_id)}')
 
     async def __aenter__(self):
         await self.connect()
