@@ -1,4 +1,5 @@
 from collections import defaultdict
+from typing import Any
 
 from socketio import AsyncClient
 
@@ -17,7 +18,7 @@ class Namespace:
         """
         self._sio = sio
         self._plugins = plugins or []
-        self._data = defaultdict(lambda: None)
+        self._data: dict[str, Any] = defaultdict()
 
     def add_plugin(self, plugin: BasePlugin) -> None:
         """

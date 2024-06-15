@@ -2,9 +2,9 @@ import logging
 
 from socketio import AsyncClient
 
-from generals_bot.constant import endpoints
-from generals_bot.constant.endpoints import ServerType
+from generals_bot.constant.endpoints import URLS
 from generals_bot.socketio import MultiHandlerAsyncClient
+from generals_bot.types.endpoints import ServerType
 
 logger = logging.getLogger(__name__)
 
@@ -31,7 +31,7 @@ class BaseClient:
 
         self.user_id = user_id
         self.username = username
-        self.url = endpoints.URLS[server]
+        self.url = URLS[server]
 
         logger.info(f"{repr(self.__class__.__name__)} initialized")
 

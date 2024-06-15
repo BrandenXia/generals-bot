@@ -1,6 +1,6 @@
 import logging
 from abc import ABC, abstractmethod
-from typing import final
+from typing import final, Any
 
 from socketio import AsyncClient
 
@@ -12,19 +12,19 @@ class BasePlugin(ABC):
 
     @property
     @abstractmethod
-    def namespace(self):
+    def namespace(self) -> str:
         """Namespace of the plugin, for sharing data between plugins"""
         pass
 
     def __init__(self) -> None:
         """Initialized plugin, can be overridden to add custom settings for the plugin"""
         self._sio: AsyncClient | None = None
-        self._namespace_data: dict | None = None
+        self._namespace_data: dict[str, Any] | None = None
 
         logger.info(f"Plugin {repr(self.__class__.__name__)} initialized")
 
     @final
-    def connect(self, sio: AsyncClient, namespace_data: dict) -> None:
+    def connect(self, sio: AsyncClient, namespace_data: dict[str, Any]) -> None:
         """
         Connects the plugin to the socketio client and namespace data, should not be overridden
         :param sio: socket.io client
@@ -39,7 +39,7 @@ class BasePlugin(ABC):
         self._register_events()
 
     @final
-    def _register_events(self):
+    def _register_events(self) -> None:
         """Register events for the plugin, called after `_plugin_initialize` method, should not be overridden"""
         for method_name in dir(self):
             if method_name.startswith("on_"):

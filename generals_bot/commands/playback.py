@@ -1,6 +1,6 @@
 import asyncio
 import pickle
-from collections.abc import Callable
+from collections.abc import Generator
 from contextlib import contextmanager
 from pathlib import Path
 from typing import Any
@@ -12,8 +12,8 @@ class Playback(BaseClient):
     """Replay a game of generals.io from a record file"""
 
     @contextmanager
-    def __disable_emit(self) -> Callable:
-        async def _nothing(*_, **__):
+    def __disable_emit(self) -> Generator[None, None, None]:
+        async def _nothing(*_: Any, **__: Any) -> None:
             return None
 
         tmp, self._sio.emit = self._sio.emit, _nothing

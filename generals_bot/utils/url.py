@@ -11,40 +11,40 @@ class URL:
         netloc: str = "",
         url: str = "",
         params: str = "",
-        query: Mapping[str, str] = None,
+        query: Mapping[str, str] | None = None,
         fragment: str = "",
     ):
         self._scheme = scheme
         self._netloc = netloc
         self._url = url
         self._params = params
-        self._query = query or {}
+        self._query: Mapping[str, str] = query or {}
         self._fragment = fragment
 
-    def scheme(self, scheme: str):
+    def scheme(self, scheme: str) -> "URL":
         self._scheme = scheme
         return self
 
-    def netloc(self, netloc: str):
+    def netloc(self, netloc: str) -> "URL":
         self._netloc = netloc
         return self
 
-    def url(self, url: str):
+    def url(self, url: str) -> "URL":
         self._url = url
         return self
 
-    def query(self, query: Mapping[str, str]):
+    def query(self, query: Mapping[str, str]) -> "URL":
         self._query = query
         return self
 
-    def fragment(self, fragment: str):
+    def fragment(self, fragment: str) -> "URL":
         self._fragment = fragment
         return self
 
-    def build(self):
+    def build(self) -> str:
         return str(self)
 
-    def __str__(self):
+    def __str__(self) -> str:
         return urlunparse(
             (
                 self._scheme,

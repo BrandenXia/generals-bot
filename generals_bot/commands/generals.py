@@ -1,4 +1,5 @@
 import logging
+from typing import Any
 
 from generals_bot.base import BaseClient
 
@@ -31,7 +32,7 @@ class Generals(BaseClient):
         if force_start:
 
             @self._sio.on("queue_update")
-            async def on_queue_update(_):
+            async def on_queue_update(_: Any) -> None:
                 await self.set_force_start(custom_game_id)
                 del self._sio.handlers["/"]["queue_update"]
 

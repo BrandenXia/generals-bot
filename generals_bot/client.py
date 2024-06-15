@@ -1,11 +1,13 @@
 import logging
 from collections import defaultdict
 from collections.abc import Mapping
+from typing import Any
 
 from rich.logging import RichHandler
 
 from generals_bot.base import BasePlugin, Namespace
 from generals_bot.commands import Generals, Playback
+from generals_bot.types.endpoints import ServerType
 
 
 class GeneralsClient(Generals, Playback):
@@ -15,7 +17,7 @@ class GeneralsClient(Generals, Playback):
         self,
         user_id: str,
         username: str,
-        server,
+        server: ServerType,
         plugins: list[BasePlugin] | None = None,
         debug: bool = False,
     ) -> None:
@@ -37,9 +39,9 @@ class GeneralsClient(Generals, Playback):
         for namespace in self._namespaces.values():
             namespace.register_plugins()
 
-    async def __aenter__(self):
+    async def __aenter__(self) -> "GeneralsClient":
         await self.connect()
         return self
 
-    async def __aexit__(self, _, __, ___) -> None:
+    async def __aexit__(self, _: Any, __: Any, ___: Any) -> None:
         await self.disconnect()
