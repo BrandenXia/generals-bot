@@ -10,7 +10,7 @@ class PlayerPlugin(BasePlugin):
 
     namespace = "game"
 
-    def _register_events(self):
+    def _plugin_initialize(self):
         self._sio.on("game_update", self.on_game_update)
 
     @timeit

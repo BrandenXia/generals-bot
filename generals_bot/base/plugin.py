@@ -33,10 +33,10 @@ class BasePlugin(ABC):
         self._sio = sio
         self._namespace_data = namespace_data
 
-        self._register_events()
+        self._plugin_initialize()
         logger.info(f"Registered events for {self.__class__.__name__}")
 
     @abstractmethod
-    def _register_events(self) -> None:
+    def _plugin_initialize(self) -> None:
         """Registers events for the plugin, overridden to add custom after connected to the socketio client"""
         pass

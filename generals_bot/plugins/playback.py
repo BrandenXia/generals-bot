@@ -25,7 +25,7 @@ class PlaybackPlugin(BasePlugin):
         assert self.record_filepath.exists(), f"{self.record_filepath} does not exist"
         assert self.record_filepath.is_file(), f"{self.record_filepath} is not a file"
 
-    def _register_events(self) -> None:
+    def _plugin_initialize(self) -> None:
         async def _nothing(*args, **kwargs):
             return None
 

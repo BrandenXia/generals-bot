@@ -10,7 +10,7 @@ class GlobalListener(BasePlugin):
 
     namespace = "global"
 
-    def _register_events(self):
+    def _plugin_initialize(self):
         self._sio.on("connect", self.on_connect)
         self._sio.on("connect_error", self.on_connect_error)
         self._sio.on("disconnect", self.on_disconnect)
