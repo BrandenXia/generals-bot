@@ -82,3 +82,10 @@ class BaseClient:
         """Force start a game"""
         await self._sio.emit("set_force_start", (custom_game_id, self.user_id))
         logger.info(f'Force started private game with ID "{custom_game_id}"')
+
+    async def __aenter__(self):
+        await self.connect()
+        return self
+
+    async def __aexit__(self, exc_type, exc_val, exc_tb):
+        await self.wait()
