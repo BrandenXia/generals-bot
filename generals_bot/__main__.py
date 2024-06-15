@@ -15,11 +15,8 @@ from generals_bot.plugins import (
 load_dotenv()
 
 
-def main():
-    loop = asyncio.new_event_loop()
-    asyncio.set_event_loop(loop)
-
-    client = GeneralsClient(
+async def _main():
+    async with GeneralsClient(
         user_id=os.getenv("USER_ID"),
         username=os.getenv("USERNAME"),
         server="bot",
@@ -31,14 +28,12 @@ def main():
             PlayerPlugin(),
         ],
         debug=True,
-    )
+    ) as client:
+        await client.join_private("test", force_start=True)
 
-    client_task = asyncio.ensure_future(client.run())
 
-    try:
-        loop.run_until_complete(client_task)
-    finally:
-        client_task.cancel()
+def main():
+    asyncio.run(_main())
 
 
 if __name__ == "__main__":

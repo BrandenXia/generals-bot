@@ -35,8 +35,3 @@ class GeneralsClient(BaseClient):
 
         for namespace in self._namespaces.values():
             namespace.register_plugins()
-
-    async def run(self):
-        await self.connect()
-        # await self.join_private("test", force_start=True)
-        await self.wait()
