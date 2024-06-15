@@ -1,5 +1,5 @@
-from .global_listener import GlobalListener
 from .data import DataListener
+from .global_listener import GlobalListener
 from .gui import GUIPlugin
-from .player import PlayerPlugin
 from .persistent import PersistentPlugin
+from .player import PlayerPlugin

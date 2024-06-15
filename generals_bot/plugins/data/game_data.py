@@ -4,8 +4,8 @@ from functools import cached_property
 from operator import attrgetter
 from typing import Any, Generator
 
-from .dto import InitialData, UpdateData
-from .types import (
+from generals_bot.types.dto import InitialData, UpdateData
+from generals_bot.types.map import (
     Terrain,
     Player,
     MapBlock,

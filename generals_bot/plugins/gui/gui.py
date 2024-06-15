@@ -2,10 +2,10 @@ import asyncio
 import logging
 from pathlib import Path
 
-from generals_bot.plugins.data import GameData
-from .silent_pygame import silent_pygame
-from ..data.types import Terrain
 from generals_bot.constant.gui import PLAYER_COLOR_RGB, TERRAIN_COLOR_RGB
+from generals_bot.plugins.data import GameData
+from generals_bot.types.map import Terrain
+from .silent_pygame import silent_pygame
 
 pygame = silent_pygame()
 

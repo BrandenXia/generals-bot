@@ -1,8 +1,8 @@
 import logging
 
 from generals_bot.base import BasePlugin
+from generals_bot.types.dto import InitialData, UpdateData
 from .game_data import GameData
-from .dto import InitialData, UpdateData
 
 logger = logging.getLogger(__name__)
 

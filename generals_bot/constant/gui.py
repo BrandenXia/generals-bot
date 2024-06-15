@@ -1,4 +1,4 @@
-from generals_bot.plugins.data.types import PlayerColor, Terrain
+from generals_bot.types.map import PlayerColor, Terrain
 
 BG_COLOR = (34, 34, 34)
 TEXT_COLOR = (255, 255, 255)

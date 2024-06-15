@@ -1,12 +1,8 @@
 from collections.abc import Mapping
 from types import MappingProxyType
-from typing import Literal
 
+from generals_bot.types.endpoints import ServerType, ProtocolType
 from generals_bot.utils import URL
-
-type ServerType = Literal["human", "bot"]
-
-type ProtocolType = Literal["ws", "https"]
 
 # Mapping of server type to protocol type to general.io URL
 URLS: Mapping[ServerType, Mapping[ProtocolType, URL]] = MappingProxyType(
