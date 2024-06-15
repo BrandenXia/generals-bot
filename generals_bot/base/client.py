@@ -34,7 +34,7 @@ class BaseClient:
         self.username = username
         self.url = endpoints.URLS[server]
 
-        logger.info(f"{self.__class__.__name__} initialized")
+        logger.info(f"{repr(self.__class__.__name__)} initialized")
 
     async def set_username(self) -> None:
         """Set username for the client, should only be called once forever for each user ID"""

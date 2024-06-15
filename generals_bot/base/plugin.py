@@ -21,7 +21,7 @@ class BasePlugin(ABC):
         self._sio: AsyncClient | None = None
         self._namespace_data: dict | None = None
 
-        logger.info(f"Plugin {self.__class__.__name__} initialized")
+        logger.info(f"Plugin {repr(self.__class__.__name__)} initialized")
 
     @final
     def connect(self, sio: AsyncClient, namespace_data: dict) -> None:
@@ -34,7 +34,7 @@ class BasePlugin(ABC):
         self._namespace_data = namespace_data
 
         self._plugin_initialize()
-        logger.info(f"Initialized plugin {self.__class__.__name__}")
+        logger.info(f"Initialized plugin {repr(self.__class__.__name__)}")
 
         self._register_events()
 
@@ -46,7 +46,7 @@ class BasePlugin(ABC):
                 event_name = method_name[3:]
                 self._sio.on(event_name, getattr(self, method_name))
                 logger.info(
-                    f"Registered event '{event_name}' for {self.__class__.__name__}"
+                    f"Registered event '{event_name}' for {repr(self.__class__.__name__)}"
                 )
 
     def _plugin_initialize(self) -> None:
