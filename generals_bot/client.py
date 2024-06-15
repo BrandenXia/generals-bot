@@ -4,10 +4,11 @@ from collections.abc import Mapping
 
 from rich.logging import RichHandler
 
-from generals_bot.base import BaseClient, BasePlugin, Namespace
+from generals_bot.base import BasePlugin, Namespace
+from generals_bot.commands import Generals, Playback
 
 
-class GeneralsClient(BaseClient):
+class GeneralsClient(Generals, Playback):
     """Client for the Generals.io game, with support for plugins"""
 
     def __init__(
@@ -17,7 +18,7 @@ class GeneralsClient(BaseClient):
         server,
         plugins: list[BasePlugin] | None = None,
         debug: bool = False,
-    ):
+    ) -> None:
         logging.basicConfig(
             level=logging.DEBUG if debug else logging.INFO,
             format="%(message)s",
@@ -35,3 +36,10 @@ class GeneralsClient(BaseClient):
 
         for namespace in self._namespaces.values():
             namespace.register_plugins()
+
+    async def __aenter__(self):
+        await self.connect()
+        return self
+
+    async def __aexit__(self, _, __, ___) -> None:
+        await self.disconnect()

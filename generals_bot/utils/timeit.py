@@ -4,7 +4,6 @@ from collections.abc import Callable
 
 from .async_utils import is_async
 
-
 logger = logging.getLogger(__name__)
 
 
