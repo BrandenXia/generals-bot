@@ -29,10 +29,6 @@ class MultiHandlerAsyncClient(AsyncClient):
             else:
                 self.handlers[namespace][event] = new_handler
 
-            logger.debug(
-                f"Added handler for event '{event}' in namespace '{namespace}'"
-            )
-
             return new_handler
 
         if handler is None:

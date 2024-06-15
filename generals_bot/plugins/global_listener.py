@@ -10,12 +10,6 @@ class GlobalListener(BasePlugin):
 
     namespace = "global"
 
-    def _plugin_initialize(self):
-        self._sio.on("connect", self.on_connect)
-        self._sio.on("connect_error", self.on_connect_error)
-        self._sio.on("disconnect", self.on_disconnect)
-        self._sio.on("*", self.on_message)
-
     @staticmethod
     def on_connect():
         logger.info("Connected to server")

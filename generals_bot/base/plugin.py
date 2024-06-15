@@ -8,7 +8,7 @@ logger = logging.getLogger(__name__)
 
 
 class BasePlugin(ABC):
-    """Base class for all plugins. All plugins should inherit from this class"""
+    """Base class for all plugins. Method names starting with 'on_' are registered as events"""
 
     @property
     @abstractmethod
@@ -34,9 +34,21 @@ class BasePlugin(ABC):
         self._namespace_data = namespace_data
 
         self._plugin_initialize()
-        logger.info(f"Registered events for {self.__class__.__name__}")
+        logger.info(f"Initialized plugin {self.__class__.__name__}")
 
-    @abstractmethod
+        self._register_events()
+
+    @final
+    def _register_events(self):
+        """Register events for the plugin, called after `_plugin_initialize` method, should not be overridden"""
+        for method_name in dir(self):
+            if method_name.startswith("on_"):
+                event_name = method_name[3:]
+                self._sio.on(event_name, getattr(self, method_name))
+                logger.info(
+                    f"Registered event '{event_name}' for {self.__class__.__name__}"
+                )
+
     def _plugin_initialize(self) -> None:
-        """Registers events for the plugin, overridden to add custom after connected to the socketio client"""
+        """Initialize plugin, called after connecting to the socketio client"""
         pass

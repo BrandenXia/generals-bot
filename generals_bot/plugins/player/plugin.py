@@ -10,9 +10,6 @@ class PlayerPlugin(BasePlugin):
 
     namespace = "game"
 
-    def _plugin_initialize(self):
-        self._sio.on("game_update", self.on_game_update)
-
     @timeit
     async def on_game_update(self, _, __):
         # TODO: Rewrite this to simplify the logic

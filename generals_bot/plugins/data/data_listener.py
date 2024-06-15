@@ -15,11 +15,6 @@ class DataListener(BasePlugin):
 
     namespace = "game"
 
-    def _plugin_initialize(self) -> None:
-        self._sio.on("game_start", self.on_game_start)
-        self._sio.on("game_update", self.on_game_update)
-        self._sio.on("game_over", self.on_game_over)
-
     async def on_game_start(self, data: InitialData, _) -> None:
         logger.info("Game started")
         self._namespace_data["data"] = GameData(data)
