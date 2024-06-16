@@ -101,8 +101,8 @@ class GameGUI:
         dy = (height - self._data.map.height * unit) // 2
 
         for x, y, army, terrain, is_city, is_general in self._data.map[
-            :, :, ("x", "y", "army", "terrain", "is_city", "is_general")
-        ]:
+                                                        :, :, ("x", "y", "army", "terrain", "is_city", "is_general")
+                                                        ]:
             start_x = x * unit + dx
             start_y = y * unit + dy
 
@@ -119,7 +119,7 @@ class GameGUI:
         pygame.display.flip()
 
     def _render_terrain(
-        self, start_x: int, start_y: int, unit: int, terrain: Terrain
+            self, start_x: int, start_y: int, unit: int, terrain: Terrain
     ) -> None:
         """Render a block of terrain on the screen"""
         color = (

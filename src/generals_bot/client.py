@@ -14,12 +14,12 @@ class GeneralsClient(Generals, Playback):
     """Client for the Generals.io game, with support for plugins"""
 
     def __init__(
-        self,
-        user_id: str,
-        username: str,
-        server: ServerType,
-        plugins: list[BasePlugin] | None = None,
-        debug: bool = False,
+            self,
+            user_id: str,
+            username: str,
+            server: ServerType,
+            plugins: list[BasePlugin] | None = None,
+            debug: bool = False,
     ) -> None:
         logging.basicConfig(
             level=logging.DEBUG if debug else logging.INFO,

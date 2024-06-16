@@ -76,11 +76,11 @@ class Map:
 
     @cached_property
     def armies(self) -> Sequence[Army]:
-        return self._map[2 : 2 + self.size] if self._map else []
+        return self._map[2: 2 + self.size] if self._map else []
 
     @cached_property
     def terrain(self) -> Sequence[Terrain]:
-        terrain = self._map[2 + self.size : 2 + 2 * self.size] if self._map else []
+        terrain = self._map[2 + self.size: 2 + 2 * self.size] if self._map else []
         return [Terrain(t) for t in terrain]
 
     @cached_property
@@ -111,7 +111,7 @@ class Map:
         )
 
     def __getitem__(
-        self, item: tuple[int | slice, int | slice, tuple[str, ...]]
+            self, item: tuple[int | slice, int | slice, tuple[str, ...]]
     ) -> Sequence[MapBlock]:
         # TODO: rewrite this method, it's working but it's ugly
         fields = item[2] if len(item) > 2 else MapBlock._fields
@@ -164,11 +164,11 @@ class Map:
         i = 0
         while i < len(diff):
             if diff[i]:
-                new.extend(old[len(new) : len(new) + diff[i]])
+                new.extend(old[len(new): len(new) + diff[i]])
             i += 1
 
             if i < len(diff) and diff[i]:
-                new.extend(diff[i + 1 : i + 1 + diff[i]])
+                new.extend(diff[i + 1: i + 1 + diff[i]])
                 i += diff[i]
             i += 1
 

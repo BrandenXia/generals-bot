@@ -1,15 +1,19 @@
-# editor
-/.idea
+# python generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
 
-# environment
+# venv
+.venv
+
+# environment variable
 .env
 
-# python
-*.pyc
-*.pyo
-*.egg-info
-build
-__pycache__
+# editor
+.idea
 
 # file system
 .DS_Store

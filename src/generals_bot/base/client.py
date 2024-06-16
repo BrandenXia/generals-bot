@@ -13,11 +13,11 @@ class BaseClient:
     """Base client for generals.io"""
 
     def __init__(
-        self,
-        user_id: str,
-        username: str,
-        server: ServerType,
-        sio: AsyncClient | None = None,
+            self,
+            user_id: str,
+            username: str,
+            server: ServerType,
+            sio: AsyncClient | None = None,
     ) -> None:
         """
         :param user_id: user ID, should be unique, consistent, and secret
