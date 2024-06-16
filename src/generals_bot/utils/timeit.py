@@ -8,7 +8,7 @@ from .async_utils import is_async
 logger = logging.getLogger(__name__)
 
 
-def timeit[** P, R](func: Callable[P, R]) -> Callable[P, R | Awaitable[R]]:
+def timeit[**P, R](func: Callable[P, R]) -> Callable[P, R | Awaitable[R]]:
     """Decorator to measure the time taken by a function to execute"""
 
     if is_async(func):

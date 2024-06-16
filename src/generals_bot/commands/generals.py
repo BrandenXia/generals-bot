@@ -17,7 +17,7 @@ class Generals(BaseClient):
         )
 
     async def join_private(
-            self, custom_game_id: str, force_start: bool = False
+        self, custom_game_id: str, force_start: bool = False
     ) -> None:
         """
         Join a private game
@@ -30,6 +30,7 @@ class Generals(BaseClient):
         )
 
         if force_start:
+
             @self._sio.on("queue_update")
             async def on_queue_update(_: Any) -> None:
                 await self.set_force_start(custom_game_id)

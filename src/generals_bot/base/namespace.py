@@ -10,7 +10,7 @@ class Namespace:
     """Namespace class to manage plugins and share data between them"""
 
     def __init__(
-            self, sio: AsyncClient, plugins: list[BasePlugin] | None = None
+        self, sio: AsyncClient, plugins: list[BasePlugin] | None = None
     ) -> None:
         """
         :param sio: socket.io client

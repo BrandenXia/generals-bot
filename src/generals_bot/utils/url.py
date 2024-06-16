@@ -6,13 +6,13 @@ class URL:
     """URL builder class"""
 
     def __init__(
-            self,
-            scheme: str = "https",
-            netloc: str = "",
-            url: str = "",
-            params: str = "",
-            query: Mapping[str, str] | None = None,
-            fragment: str = "",
+        self,
+        scheme: str = "https",
+        netloc: str = "",
+        url: str = "",
+        params: str = "",
+        query: Mapping[str, str] | None = None,
+        fragment: str = "",
     ):
         self._scheme = scheme
         self._netloc = netloc
