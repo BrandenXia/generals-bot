@@ -29,6 +29,10 @@ target-version = ["py312"]
 
 [tool.mypy]
 python_version = "3.12"
+mypy_path = "src"
+modules = ["generals_bot"]
+strict = true
+disable_error_code = ["import-untyped"]
 
 [tool.rye]
 managed = true
@@ -39,7 +43,7 @@ dev-dependencies = [
 
 [tool.rye.scripts]
 format = "black src"
-typecheck = "mypy src --enable-incomplete-feature=NewGenericSyntax"
+typecheck = "mypy --enable-incomplete-feature=NewGenericSyntax"
 
 [tool.hatch.metadata]
 allow-direct-references = true

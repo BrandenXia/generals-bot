@@ -5,8 +5,10 @@ from socketio import AsyncClient
 
 logger = logging.getLogger(__name__)
 
+type Handler[**P] = Callable[P, Awaitable[None]]
 
-class MultiHandlerAsyncClient(AsyncClient):
+
+class MultiHandlerAsyncClient(AsyncClient):  # type: ignore
     """AsyncClient subclass that allows multiple handlers for the same event"""
 
     def on[
@@ -14,10 +16,10 @@ class MultiHandlerAsyncClient(AsyncClient):
     ](
         self,
         event: str,
-        handler: Callable[P, Awaitable[None]] | None = None,
+        handler: Handler[P] | None = None,
         namespace: str | None = None,
     ) -> (
-        Callable[[Callable[P, Awaitable[None]]], Callable[P, Awaitable[None]]] | None
+        Callable[[Handler[P]], Handler[P]] | None
     ):
         """
         Override the on method to allow multiple handlers for the same event,
@@ -26,8 +28,8 @@ class MultiHandlerAsyncClient(AsyncClient):
         namespace = namespace or "/"
 
         def add_handler(
-            new_handler: Callable[P, Awaitable[None]]
-        ) -> Callable[P, Awaitable[None]]:
+            new_handler: Handler[P]
+        ) -> Handler[P]:
             if namespace not in self.handlers:
                 self.handlers[namespace] = {}
 

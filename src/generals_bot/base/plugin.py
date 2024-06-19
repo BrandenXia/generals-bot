@@ -41,6 +41,8 @@ class BasePlugin(ABC):
     @final
     def _register_events(self) -> None:
         """Register events for the plugin, called after `_plugin_initialize` method, should not be overridden"""
+        assert self._sio is not None, "SocketIO client not initialized"
+
         for method_name in dir(self):
             if method_name.startswith("on_"):
                 event_name = method_name[3:]

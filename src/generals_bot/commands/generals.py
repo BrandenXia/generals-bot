@@ -31,7 +31,7 @@ class Generals(BaseClient):
 
         if force_start:
 
-            @self._sio.on("queue_update")
+            @self._sio.on("queue_update")  # type: ignore
             async def on_queue_update(_: Any) -> None:
                 await self.set_force_start(custom_game_id)
                 del self._sio.handlers["/"]["queue_update"]
