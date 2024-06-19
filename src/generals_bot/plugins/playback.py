@@ -5,11 +5,15 @@ from contextlib import contextmanager
 from pathlib import Path
 from typing import Any
 
-from generals_bot.base import BaseClient
+from generals_bot.base import BasePlugin
 
 
-class Playback(BaseClient):
+class PlaybackPlugin(BasePlugin):
     """Replay a game of generals.io from a record file"""
+
+    @property
+    def methods(self) -> tuple[str, ...]:
+        return ("play_record",)
 
     @contextmanager
     def __disable_emit(self) -> Generator[None, None, None]:

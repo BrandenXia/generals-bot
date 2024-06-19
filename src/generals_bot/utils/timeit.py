@@ -16,7 +16,8 @@ def timeit[**P, R](func: Callable[P, R]) -> Callable[P, R | Awaitable[R]]:
         async def async_wrapper(*args: P.args, **kwargs: P.kwargs) -> R:
             start = time.monotonic_ns()
             result = await cast(Callable[P, Awaitable[R]], func)(*args, **kwargs)
-            logger.debug(f"{func.__name__} took {time.monotonic_ns() - start} seconds")
+            duration = (time.monotonic_ns() - start) / 1_000_000_000
+            logger.debug(f"{func.__name__} took {duration} seconds")
             return result
 
         return async_wrapper
@@ -26,7 +27,8 @@ def timeit[**P, R](func: Callable[P, R]) -> Callable[P, R | Awaitable[R]]:
         def sync_wrapper(*args: P.args, **kwargs: P.kwargs) -> R:
             start = time.monotonic_ns()
             result = func(*args, **kwargs)
-            logger.debug(f"{func.__name__} took {time.monotonic_ns() - start} seconds")
+            duration = (time.monotonic_ns() - start) / 1_000_000_000
+            logger.debug(f"{func.__name__} took {duration} seconds")
             return result
 
         return sync_wrapper

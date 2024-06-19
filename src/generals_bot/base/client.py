@@ -15,23 +15,17 @@ class BaseClient:
 
     def __init__(
         self,
-        user_id: str,
-        username: str,
         server: ServerType,
         sio: AsyncClient | None = None,
     ) -> None:
         """
-        :param user_id: user ID, should be unique, consistent, and secret
-        :param username: username to display
         :param server: "human" or "bot", currently only "bot" is supported due to generals.io restrictions
         :param sio: socket.io client, defaults to MultiHandlerAsyncClient
         """
-        logger.debug(f"Username: {repr(username)} | Server: {repr(server)}")
+        logger.debug(f"Server: {repr(server)}")
 
         self._sio = sio or MultiHandlerAsyncClient()
 
-        self.user_id = user_id
-        self.username = username
         self.url = URLS[server]
 
         logger.info(f"{repr(self.__class__.__name__)} initialized")

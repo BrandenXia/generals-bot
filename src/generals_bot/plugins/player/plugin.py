@@ -8,7 +8,9 @@ from generals_bot.utils import timeit
 class PlayerPlugin(BasePlugin):
     """Player plugin for controlling the bot"""
 
-    namespace = "game"
+    @property
+    def namespace(self) -> str:
+        return "game"
 
     @timeit
     async def on_game_update(self, _, __):

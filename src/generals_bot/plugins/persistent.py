@@ -12,7 +12,9 @@ logger = logging.getLogger(__name__)
 class PersistentPlugin(BasePlugin):
     """Plugin that persists data of each game"""
 
-    namespace = "game"
+    @property
+    def namespace(self) -> str:
+        return "game"
 
     def __init__(self, persist_dir: Path | str = Path.cwd() / "records") -> None:
         super().__init__()

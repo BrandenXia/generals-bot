@@ -18,18 +18,14 @@ class MultiHandlerAsyncClient(AsyncClient):  # type: ignore
         event: str,
         handler: Handler[P] | None = None,
         namespace: str | None = None,
-    ) -> (
-        Callable[[Handler[P]], Handler[P]] | None
-    ):
+    ) -> (Callable[[Handler[P]], Handler[P]] | None):
         """
         Override the on method to allow multiple handlers for the same event,
         note that the handlers are executed in the order they are added.
         """
         namespace = namespace or "/"
 
-        def add_handler(
-            new_handler: Handler[P]
-        ) -> Handler[P]:
+        def add_handler(new_handler: Handler[P]) -> Handler[P]:
             if namespace not in self.handlers:
                 self.handlers[namespace] = {}
 

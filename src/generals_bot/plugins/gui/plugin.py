@@ -5,7 +5,9 @@ from .gui import GameGUI
 class GUIPlugin(BasePlugin):
     """Plugin for the GUI of the game"""
 
-    namespace = "game"
+    @property
+    def namespace(self) -> str:
+        return "game"
 
     def __init__(self) -> None:
         super().__init__()

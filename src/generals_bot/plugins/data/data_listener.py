@@ -13,7 +13,9 @@ class DataListener(BasePlugin):
     Data is stored in the namespace_data dictionary under the key "data"
     """
 
-    namespace = "game"
+    @property
+    def namespace(self) -> str:
+        return "game"
 
     async def on_game_start(self, data: InitialData, _) -> None:
         logger.info("Game started")

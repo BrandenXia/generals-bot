@@ -1,13 +1,27 @@
 import logging
 from typing import Any
 
-from generals_bot.base import BaseClient
+from generals_bot.base import BasePlugin
 
 logger = logging.getLogger(__name__)
 
 
-class Generals(BaseClient):
+class GeneralsPlugin(BasePlugin):
     """Basic operations for generals.io"""
+
+    @property
+    def methods(self) -> tuple[str, ...]:
+        return "set_username", "join_private"
+
+    def __init__(self, user_id: str, username: str) -> None:
+        """
+        :param user_id: generals.io user ID
+        :param username: generals.io username
+        """
+        self.user_id = user_id
+        self.username = username
+
+        super().__init__()
 
     async def set_username(self) -> None:
         """Set username for the client, should only be called once forever for each user ID"""
@@ -25,9 +39,7 @@ class Generals(BaseClient):
         :param force_start: whether to force start the game
         """
         await self._sio.emit("join_private", (custom_game_id, self.user_id))
-        logger.info(
-            f'Joined private game at "{self.url["https"].url(f"/games/{custom_game_id}").build()}"'
-        )
+        logger.info(f"Joined private game at game ID {repr(custom_game_id)}")
 
         if force_start:
 

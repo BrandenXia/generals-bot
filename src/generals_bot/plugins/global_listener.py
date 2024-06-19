@@ -8,8 +8,6 @@ logger = logging.getLogger(__name__)
 class GlobalListener(BasePlugin):
     """Global listener plugin that listens to all events"""
 
-    namespace = "global"
-
     @staticmethod
     def on_connect():
         logger.info("Connected to server")
