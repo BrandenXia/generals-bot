@@ -22,28 +22,18 @@ class Namespace:
         self._plugins: list[BasePlugin] = []
         self._data: dict[str, Any] = defaultdict()
 
-    def add_plugin(self, plugin: BasePlugin) -> None:
+    def load_plugin(self, plugin: BasePlugin) -> None:
         """
-        Add a plugin to the namespace, should be called before registering
-        :param plugin: plugin to add
+        Load a plugin into the namespace
+        :param plugin: plugin to load
         """
-        assert isinstance(plugin, BasePlugin)
+        assert isinstance(
+            plugin, BasePlugin
+        ), "Plugin must be an instance of BasePlugin"
 
         for name in plugin.methods:
             method = getattr(plugin, name)
             self._bind(name, method)
 
-        self._plugins.append(plugin)
-
-    def _register_plugin(self, plugin: BasePlugin) -> None:
-        """
-        Connect a plugin to the namespace
-        :param plugin: plugin to connect
-        """
-        assert isinstance(plugin, BasePlugin)
         plugin.connect(self._sio, self._data)
-
-    def register_plugins(self) -> None:
-        """Register all plugins in the namespace"""
-        for plugin in self._plugins:
-            self._register_plugin(plugin)
+        self._plugins.append(plugin)

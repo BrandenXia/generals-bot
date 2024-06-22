@@ -32,10 +32,7 @@ class GeneralsClient(BaseClient):
             lambda: Namespace(self._add_method, self._sio)
         )
         for plugin in plugins or []:
-            self._namespaces[plugin.namespace].add_plugin(plugin)
-
-        for namespace in self._namespaces.values():
-            namespace.register_plugins()
+            self._namespaces[plugin.namespace].load_plugin(plugin)
 
     def _add_method(self, name: str, method: Callable[..., Any]) -> None:
         self.methods[name] = method
