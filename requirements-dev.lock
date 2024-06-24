@@ -34,7 +34,7 @@ mdurl==0.1.2
 multidict==6.0.5
     # via aiohttp
     # via yarl
-mypy @ git+https://github.com/python/mypy.git@693e1d8d74ba331c2bd36ff4774c9a4eefe03ab6
+mypy @ git+https://github.com/python/mypy.git@abdaf6a571a4a539d755db1d6dcfdc45b69d97c5
 mypy-extensions==1.0.0
     # via black
     # via mypy
